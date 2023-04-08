@@ -7,7 +7,7 @@ public class JugProblem {
     private Node root;
 
     /**
-     * Note that this problem , the root is not null at all .initially the root has state (0,0)
+     * Note that in this problem , the root is not null at all .initially the root has state (0,0)
      * @param goal
      */
 
@@ -31,6 +31,9 @@ public class JugProblem {
             if (node.getState().getJug1() == goal || node.getState().getJug2() == goal) {
                 solutions.add(node);
             }
+            /**
+             * Adds the state of the parent node : this is part of the constraints in problem formulation.
+             */
             visited.add(node.getState());
 
             for (Node child : node.getChildren()) {
@@ -43,16 +46,16 @@ public class JugProblem {
         return solutions;
     }
 
-    public void solveBFS() {
+    public List<Node> solveBFS() {
         Queue<Node> queue = new LinkedList<>();
+        List<Node> solutions = new ArrayList<>();
         Set<JugState> visited = new HashSet<>();
         queue.add(root);
 
         while (!queue.isEmpty()) {
             Node node = queue.remove();
             if (node.getState().getJug1() == goal || node.getState().getJug2() == goal) {
-                printSolution(node);
-                return;
+                solutions.add(node);
             }
             visited.add(node.getState());
 
@@ -61,9 +64,34 @@ public class JugProblem {
                     queue.add(child);
                 }
             }
+
         }
 
-        System.out.println("No solution found.");
+        return solutions;
+
+    }
+
+    public ArrayList<Node> traceBFS() {
+        Queue<Node> queue = new LinkedList<>();
+        ArrayList<Node> nodeArrayList= new ArrayList<>();
+        Set<JugState> visited = new HashSet<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            Node node = queue.remove();
+            nodeArrayList.add(node);
+            visited.add(node.getState());
+
+            for (Node child : node.getChildren()) {
+                if (!visited.contains(child.getState())) {
+                    queue.add(child);
+                }
+            }
+
+        }
+        return nodeArrayList;
+
+
     }
 
     public void  printSolution(Node node) {

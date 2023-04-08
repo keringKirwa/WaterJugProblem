@@ -52,10 +52,9 @@ public class JugState {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof JugState)) {
+        if (!(obj instanceof JugState other)) {
             return false;
         }
-        JugState other = (JugState) obj;
         return jug1 == other.jug1 && jug2 == other.jug2;
     }
 
